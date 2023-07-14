@@ -4,21 +4,24 @@ import { User } from "./pages/user";
 import { Routes, Route } from "react-router-dom";
 import { Navbar } from "./components/navbar";
 import { useState } from "react";
+import UserContext from "./contexts/user.context";
 
-// fork this sandbox and keep a copy
+
 export default function App() {
   const [username, setUsername] = useState("bob89");
 
   return (
     <div className="App">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home username={username} />} />
-        <Route
-          path="/user"
-          element={<User username={username} setUsername={setUsername} />}
-        />
-      </Routes>
+      <UserContext.Provider value={{ username, setUsername }}>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home username={username} />} />
+          <Route
+            path="/user"
+            element={<User username={username} setUsername={setUsername} />}
+          />
+        </Routes>
+      </UserContext.Provider>
     </div>
   );
 }
